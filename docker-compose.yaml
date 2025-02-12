@@ -1,1 +1,16 @@
+services:
+  frontend: 
+    build:
+      context: ./frontend
+    volumes:
+      - ./frontend:/app
+    ports:
+      - 8080:5173
+    depends_on: 
+      - backend
+    command: sh -c "npm i && npm run host"
 
+  backend:
+    build: 
+      context: ./backend
+    
