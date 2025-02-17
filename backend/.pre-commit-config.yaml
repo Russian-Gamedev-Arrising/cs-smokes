@@ -1,0 +1,13 @@
+repos:
+  - repo: local
+    rev: 23.1.0
+    hooks:
+      - id: black
+        types: [python]
+        language: system
+  - repo: local
+    rev: 6.0.0
+    hooks:
+      - id: flake8
+        types: [python]
+        language: system
