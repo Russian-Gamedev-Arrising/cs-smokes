@@ -25,4 +25,4 @@ urlpatterns = [
 
 
 
-pre_commmitik_test = 32
+pre_commmitik_test = 52
