@@ -1,3 +1,4 @@
+
 services:
   frontend: 
     build:
@@ -11,6 +12,43 @@ services:
     command: sh -c "npm i && npm run host"
 
   backend:
-    build: 
-      context: ./backend
+    build:
+      context: ./backend  
+    volumes:
+      - ./backend:/backend  
+    ports:
+      - "3000:8000" 
+    env_file:
+      - .env   
+          
+    environment:
+      - PYTHONDONTWRITEBYTECODE=1
+      - PYTHONUNBUFFERED=1
+      - DEBUG=1
+      - SECRET_KEY=SECRET_KEY
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=db
+      - DB_PORT=5432
+    depends_on:
+      - db                 
+    command: sh -c "python manage.py runserver 0.0.0.0:8000" 
+
+  db:
+    image: postgres:15-alpine  
+    restart: always   
+    env_file:
+      - .env           
+    environment:
+      - POSTGRES_DB= ${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    ports:
+      - "5432:5432"         
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  
+
+volumes:
+  postgres_data:
     
