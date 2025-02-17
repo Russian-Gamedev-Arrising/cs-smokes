@@ -1,53 +1,60 @@
-
 services:
-  frontend: 
-    build:
-      context: ./frontend
-    volumes:
-      - ./frontend:/app
-    ports:
-      - 8080:5173
-    depends_on: 
-      - backend
-    command: sh -c "npm i && npm run host"
+    frontend:
+        container_name: frontend
+        build:
+            context: ./frontend
+        volumes:
+            - ./frontend:/app
+        ports:
+            - 5173:5173
+        depends_on:
+            - backend
+        command: sh -c "npm i && npm run host"
 
-  backend:
-    build:
-      context: ./backend  
-    volumes:
-      - ./backend:/backend  
-    ports:
-      - "3000:8000" 
-    env_file:
-      - ./.env       
-    environment:
-      - PYTHONDONTWRITEBYTECODE=1
-      - PYTHONUNBUFFERED=1
-      - DEBUG=1
-      - SECRET_KEY=SECRET_KEY
-      - DB_NAME=${DB_NAME}
-      - DB_USER=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - DB_HOST=db
-      - DB_PORT=5432
-    depends_on:
-      - db                 
-    command: sh -c "python manage.py runserver 0.0.0.0:8000" 
+    backend:
+        container_name: backend
+        build:
+            context: ./backend
+        volumes:
+            - ./backend:/backend
+        ports:
+            - "3000:8000"
+        env_file:
+            - ./.env
+        environment:
+            - PYTHONDONTWRITEBYTECODE=1
+            - PYTHONUNBUFFERED=1
+            - DEBUG=1
+            - SECRET_KEY=SECRET_KEY
+            - DB_NAME=${DB_NAME}
+            - DB_USER=${DB_USER}
+            - DB_PASSWORD=${DB_PASSWORD}
+            - DB_HOST=db
+            - DB_PORT=5432
+        depends_on:
+            - db
+        command: sh -c "python manage.py runserver 0.0.0.0:8000"
 
-  db:
-    image: postgres:15-alpine  
-    restart: always   
-    env_file:
-      - .env           
-    environment:
-      - POSTGRES_DB=${DB_NAME}
-      - POSTGRES_USER=${DB_USER}
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
-    ports:
-      - "5432:5432"         
-    volumes:
-      - ./postgres_data:/var/lib/postgresql/data  
+    db:
+        image: postgres:15-alpine
+        restart: always
+        env_file:
+            - .env
+        environment:
+            - POSTGRES_DB=${DB_NAME}
+            - POSTGRES_USER=${DB_USER}
+            - POSTGRES_PASSWORD=${DB_PASSWORD}
+        ports:
+            - "5432:5432"
+        volumes:
+            - ./postgres_data:/var/lib/postgresql/data
 
-volumes:
-  postgres_data:
-    
+    info-service:
+        container_name: info-service
+        image: swaggerapi/swagger-ui
+        ports:
+            - 9999:8080
+        volumes:
+            - ./info-service/swagger.yaml:/spec/swagger.yaml
+        environment:
+            SWAGGER_JSON: /spec/swagger.yaml
