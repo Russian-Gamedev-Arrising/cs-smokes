@@ -11,12 +11,12 @@ jobs:
 
     steps:
       - name: Check Github
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Python configuration
         uses: actions/setup-python@v3
         with:
-          python-version: '3.13'
+          python-version: '3.12'
 
       - name: Running pip install
         run: |

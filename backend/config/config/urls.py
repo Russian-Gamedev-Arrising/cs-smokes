@@ -23,7 +23,5 @@ urlpatterns = [
 ]
 
 
-
-
-pre_commmitik_test =     52
-sigma="test"
+pre_commmitik_test = 52
+sigma = "test"

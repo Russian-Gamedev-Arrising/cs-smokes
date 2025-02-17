@@ -1,13 +1,15 @@
 repos:
   - repo: local
-    rev: 23.1.0
     hooks:
       - id: black
+        name: black
         types: [python]
         language: system
+        entry: black .
   - repo: local
-    rev: 6.0.0
     hooks:
       - id: flake8
+        name: flake8
         types: [python]
         language: system
+        entry: flake8 --config .flake8 .
