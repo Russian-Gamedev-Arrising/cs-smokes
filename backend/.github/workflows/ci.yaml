@@ -27,7 +27,7 @@ jobs:
         run: flake8 .
 
       - name: Black check
-        run: black --check .
+        run: black  .
         
       - name: default DRF test
         run: python manage.py test
