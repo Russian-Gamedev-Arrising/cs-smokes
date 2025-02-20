@@ -25,8 +25,8 @@ Here is list of all technologies used in project:
 
 scripts(`npm run ...`) :
 
--   `...dev` - run local server, to preview project
--   `...build` - creates build in `dist` directory
--   `...lint` - shows all problems in project using eslint
--   `...lint:auto-fix` - eslint will fix all problems that can be fixed automatically
--   `...lint:format` - prettier will reformat all files in project
+- `...dev` - run local server, to preview project
+- `...build` - creates build in `dist` directory
+- `...lint` - shows all problems in project using eslint
+- `...lint:auto-fix` - eslint will fix all problems that can be fixed automatically
+- `...lint:format` - prettier will reformat all files in project

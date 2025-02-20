@@ -9,8 +9,8 @@
         "host": "npx vite --host",
         "build": "npx vite build",
         "lint": "npx eslint .",
-        "lint:auto-fix": "npx eslint src --fix",
-        "lint:format": "npx prettier . --write"
+        "lint:auto-fix": "npx eslint ./src --fix",
+        "lint:format": "npx prettier ./src --write"
     },
     "dependencies": {
         "@reduxjs/toolkit": "^2.5.0",
@@ -40,6 +40,7 @@
         "eslint-plugin-react-hooks": "^5.1.0-rc.0",
         "eslint-plugin-react-refresh": "^0.4.12",
         "globals": "^15.12.0",
+        "husky": "^9.1.7",
         "prettier": "^3.3.3",
         "sass": "^1.79.2",
         "sass-embedded": "^1.79.1",
