@@ -9,7 +9,7 @@ exclude =
     env,
     .env,
     .idea,
-    .venv,
+    .venv/*,
     ../frontend/*,
     ./frontend/*,
     ../bot/venv,
