@@ -24,7 +24,7 @@ jobs:
           pip install -r bot/requirements_bot.txt
 
       - name: Run Flake8
-        run: flake8 .
+        run: flake8 --config=backend/.flake8 .
 
       - name: Run Black
         run: black --check .
