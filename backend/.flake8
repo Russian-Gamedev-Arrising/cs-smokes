@@ -1,0 +1,20 @@
+[flake8]
+max-line-length = 88
+ignore = E203, E231, E501, W503, F403, E265, W293, E711, F601
+exclude =
+    .git,
+    __pycache__,
+    migrations,
+    venv,
+    env,
+    .env,
+    .idea,
+    .venv,
+    ../frontend/*,
+    ./frontend/*,
+    ../bot/venv,
+    ../bot/env,
+    ../bot/.venv,
+    ../bot/.env,
+    ../bot/.idea/*
+    
