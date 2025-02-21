@@ -3,8 +3,12 @@ import asyncio
 from aiogram import Bot, Dispatcher, types
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup, WebAppInfo
 from aiogram.filters import CommandStart
+from dotenv import load_dotenv
+import os
 
-TOKEN = "7226023253:AAHcvwhAjEnSGM-ABVNdV3Nu0KDBnIV2spc"
+
+load_dotenv()
+TOKEN = os.getenv("TOKEN")
 WEB_APP_URL = "https://misis.ru"  # ссылка на наш вебап(пока что рандомная)
 
 logging.basicConfig(level=logging.INFO)
