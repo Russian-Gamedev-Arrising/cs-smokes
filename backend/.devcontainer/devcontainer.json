@@ -1,0 +1,23 @@
+{
+	"name": "Backend Dev Container",
+	"dockerComposeFile": [
+		"../../docker-compose.yaml"
+	],
+	"service": "backend",
+	"workspaceFolder": "workspace/backend",
+	"customizations": {
+		"extensions": [
+			"ms-python.python",
+			"ms-azuretools.vscode-docker"
+		],
+		"vscode": {
+			"settings": {
+				"python.pythonPath": "/usr/local/bin/python"
+			},
+		}
+	},
+	"forwardPorts": [
+		3000
+	],
+	"remoteUser": "root"
+}

@@ -33,7 +33,7 @@ services:
             - DB_PORT=5432
         depends_on:
             - db
-        command: sh -c "python manage.py runserver 0.0.0.0:8000"
+        command: sh ./run-server.sh
 
     db:
         container_name: postgres-db
