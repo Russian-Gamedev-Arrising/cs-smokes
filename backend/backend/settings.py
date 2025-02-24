@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "config",
     "django.contrib.postgres",
     "backend",
 ]
@@ -138,4 +137,4 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # path to setting.py
-settings_module = os.getenv("DJANGO_SETTINGS_MODULE", "backend.config.settings")
+# settings_module = os.getenv("DJANGO_SETTINGS_MODULE", "backend.backend.settings")
