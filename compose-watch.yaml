@@ -1,0 +1,6 @@
+watch:
+  - path: ./requirements.txt
+    action: rebuild  
+  - path: .  
+    target: /backend
+    action: sync
