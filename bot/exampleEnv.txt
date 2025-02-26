@@ -1,0 +1,2 @@
+TOKEN = "your_token"
+WEB_APP_URL = "your_url"
