@@ -6,20 +6,33 @@
 	"service": "backend",
 	"workspaceFolder": "/backend",
 	"customizations": {
-		"extensions": [
-			"ms-python.python",
-			"ms-azuretools.vscode-docker",
-			"postman.postman-for-vscode",
-			"streetsidesoftware.code-spell-checker"
-		],
 		"vscode": {
+			"extensions": [
+				"ms-python.python",
+				"ms-azuretools.vscode-docker",
+				"postman.postman-for-vscode",
+				"streetsidesoftware.code-spell-checker"
+			],
 			"settings": {
-				"python.pythonPath": "/usr/local/bin/python",
-				"cSpell.language": "en,ru"
+				"cSpell.language": "en, ru",
+				"python.defaultInterpreterPath": "/usr/local/bin/python",
+				"python.linting.enabled": true,
+				"python.linting.pylintEnabled": true,
+				"python.formatting.autopep8Path": "/usr/local/py-utils/bin/autopep8",
+				"python.formatting.blackPath": "/usr/local/py-utils/bin/black",
+				"python.formatting.yapfPath": "/usr/local/py-utils/bin/yapf",
+				"python.linting.banditPath": "/usr/local/py-utils/bin/bandit",
+				"python.linting.flake8Path": "/usr/local/py-utils/bin/flake8",
+				"python.linting.mypyPath": "/usr/local/py-utils/bin/mypy",
+				"python.linting.pycodestylePath": "/usr/local/py-utils/bin/pycodestyle",
+				"python.linting.pydocstylePath": "/usr/local/py-utils/bin/pydocstyle",
+				"python.linting.pylintPath": "/usr/local/py-utils/bin/pylint"
 			},
 		}
 	},
 	"forwardPorts": [
 		3000
-	]
+	],
+	"remoteUser": "service-user",
+	"containerUser": "service-user"
 }
