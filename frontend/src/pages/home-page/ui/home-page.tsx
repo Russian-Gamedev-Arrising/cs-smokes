@@ -1,6 +1,6 @@
-import { Header } from "@widgets/header"
-import { Main } from "@widgets/main"
-import { Footer } from "@widgets/footer"
+import { Header } from "@app/layout/header"
+import { Main } from "@app/layout/main"
+import { Footer } from "@app/layout/footer"
 import classes from "./home-page.module.scss"
 
 export function Homepage() {
