@@ -5,8 +5,3 @@
     align-items: center;
     margin-bottom: 150px;
 }
-
-.background {
-    @include backgroung-styles;
-    background-color: var(--color-background);
-}

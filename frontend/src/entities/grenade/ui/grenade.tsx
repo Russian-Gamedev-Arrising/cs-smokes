@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom"
 import { GrenadeModel } from "../domain"
 import { Card, CardContent, CardHeader } from "@shared/ui/card"
 
@@ -6,8 +7,14 @@ type GrenadeProps = {
 }
 
 export function Grenade({ grenade }: GrenadeProps) {
+    const navigate = useNavigate()
+
+    function clickHandler() {
+        navigate(`/grenades/${grenade.grenade_id}`)
+    }
+
     return (
-        <Card>
+        <Card onClick={clickHandler}>
             <CardHeader>
                 <span>Grenade id:</span>
                 <span>{grenade.grenade_id}</span>

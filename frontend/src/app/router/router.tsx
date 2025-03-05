@@ -1,7 +1,8 @@
+import { Grenades } from "@pages/grenades"
 import { Layout } from "../layout"
 import { Homepage } from "@pages/home-page"
-import { GrenadesList } from "@widgets/grenades-list"
 import { createBrowserRouter } from "react-router-dom"
+import { GrenadePage } from "@pages/grenade-page"
 
 export const router = createBrowserRouter(
     [
@@ -18,7 +19,11 @@ export const router = createBrowserRouter(
                 },
                 {
                     path: "grenades",
-                    element: <GrenadesList />,
+                    element: <Grenades />,
+                },
+                {
+                    path: "grenades/:grenadeId",
+                    element: <GrenadePage />,
                 },
             ],
         },
