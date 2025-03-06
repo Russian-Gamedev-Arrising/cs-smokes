@@ -1,1 +1,1 @@
-export { Layout } from "./ui/layout"
+export { Layout } from "./layout"

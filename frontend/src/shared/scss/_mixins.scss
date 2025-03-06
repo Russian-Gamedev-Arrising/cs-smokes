@@ -41,4 +41,8 @@
     z-index: -100;
     @content;
 }
-// TODO: add font mixins
+
+@mixin font-roboto {
+    font-family: "Roboto";
+    font-weight: 400;
+}
