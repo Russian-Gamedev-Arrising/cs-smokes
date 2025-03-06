@@ -1,3 +1,4 @@
+import classes from "./items-list.module.scss"
 import { ReactNode } from "react"
 
 type ItemsListProps<T> = {
@@ -16,9 +17,5 @@ export function ItemsList<T>({
             return <div>Загрузка...</div>
         }
 
-    return (
-        <div>
-            <div>{mapFunction(elements)}</div>
-        </div>
-    )
+    return <div className={classes.list}>{mapFunction(elements)}</div>
 }

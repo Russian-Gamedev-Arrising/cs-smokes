@@ -1,6 +1,6 @@
 import { grenadeApi, grenadeMaper } from "@entities/grenade"
 import { useQuery } from "@tanstack/react-query"
-import { ItemsList } from "@widgets/items-list"
+import { ItemsList } from "@shared/ui/items-list/items-list"
 
 export function GrenadesList() {
     const { data = [], isLoading, isError } = useQuery(grenadeApi.getGrenades())

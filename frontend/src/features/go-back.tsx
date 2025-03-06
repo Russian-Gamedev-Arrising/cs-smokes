@@ -1,7 +1,9 @@
 import { Button } from "@shared/ui/button"
 import { useNavigate } from "react-router-dom"
 
-export function GoBack() {
+type GoBackProps = React.ComponentProps<"button"> & {}
+
+export function GoBack({ ...rest }: GoBackProps) {
     const navigate = useNavigate()
 
     function clickHandler() {
@@ -9,7 +11,7 @@ export function GoBack() {
     }
 
     return (
-        <Button variant='ghost' onClick={clickHandler}>
+        <Button variant='ghost' onClick={clickHandler} {...rest}>
             Назад
         </Button>
     )
