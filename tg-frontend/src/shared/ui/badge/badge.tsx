@@ -2,7 +2,7 @@ import clsx from "clsx"
 import classes from "./badge.module.scss"
 
 type BadgeProps = React.PropsWithChildren & {
-    color?: "accent" | "disabled" | "danger" | "success"
+    color?: "accent" | "disabled" | "danger" | "success" | "warning" | "neutral"
     radius?: "sm" | "md" | "lg"
     className?: string
 }

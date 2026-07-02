@@ -5,9 +5,12 @@
     justify-content: center;
 
     padding-block: 3px;
-    padding-inline: 5px;
+    padding-inline: toRem(7);
+    border: 1px solid transparent;
 
     font-size: var(--ui-small);
+    font-weight: 700;
+    line-height: 1.2;
     color: var(--color-text-main);
     text-align: center;
 
@@ -16,19 +19,35 @@
 
 .color {
     &-accent {
+        color: #082f2d;
         background-color: var(--color-accent);
     }
 
     &-disabled {
-        background-color: var(--color-disabled);
+        border-color: rgb(148 163 184 / 28%);
+        color: var(--color-text-muted);
+        background-color: rgb(148 163 184 / 15%);
     }
 
     &-danger {
+        color: #450a0a;
         background-color: var(--color-danger);
     }
 
     &-success {
+        color: #052e16;
         background-color: var(--color-success);
+    }
+
+    &-warning {
+        color: #422006;
+        background-color: var(--color-warning);
+    }
+
+    &-neutral {
+        border-color: rgb(148 163 184 / 20%);
+        color: var(--color-text-main);
+        background-color: rgb(51 65 85 / 80%);
     }
 }
 
@@ -38,10 +57,10 @@
     }
 
     &-md {
-        border-radius: 5px;
+        border-radius: var(--border-radius-small);
     }
 
     &-lg {
-        border-radius: 16px;
+        border-radius: var(--border-radius);
     }
 }

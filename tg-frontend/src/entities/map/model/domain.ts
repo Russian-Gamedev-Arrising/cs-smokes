@@ -14,7 +14,7 @@ export const mapDTOschema = z.object({
 
 export const mapPageDTOschema = z
     .object({
-        map_lineups: grenadeDTOschema.array(),
+        map_lineups: grenadeDTOschema.array().nullable(),
     })
     .extend(mapDTOschema.shape)
 

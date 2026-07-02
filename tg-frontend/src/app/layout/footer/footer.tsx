@@ -1,51 +1,64 @@
-import { Link } from "react-router-dom"
+import { NavLink } from "react-router-dom"
+import { Heart, Home, Map, Plus, User } from "lucide-react"
+import clsx from "clsx"
 import classes from "./footer.module.scss"
-import { Button } from "@shared/ui/button"
-import { Icons } from "@shared/ui/icons"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@shared/ui/tooltip"
 
-const config: { path: string; icon: React.ReactNode; activeOn: string[] }[] = [
+const config = [
     {
-        path: "/favorites",
-        icon: <Icons.LikeIcon />,
-        activeOn: ["favorites"],
+        path: "/",
+        icon: Home,
+        label: "Hub",
     },
     {
         path: "/maps",
-        icon: <Icons.ListIcon />,
-        activeOn: ["maps", "grenade"],
+        icon: Map,
+        label: "Maps",
     },
     {
         path: "/grenades/create",
-        icon: <Icons.PlusIcon />,
-        activeOn: ["maps", "grenade"],
+        icon: Plus,
+        label: "Add lineup",
+        isPrimary: true,
     },
     {
-        path: "/grenades",
-        icon: <Icons.GrenadeIcon />,
-        activeOn: ["maps", "grenade"],
+        path: "/favorites",
+        icon: Heart,
+        label: "Favorites",
     },
     {
         path: "/profile",
-        icon: <Icons.UserIcon />,
-        activeOn: ["profile", "pull-request"],
+        icon: User,
+        label: "Profile",
     },
 ]
 
 export function Footer() {
     return (
         <footer className={classes.footer}>
-            <nav className={classes.links}>
-                {config.map((el) => {
-                    // let status: "active" | "inactive" = "inactive"
-
+            <nav className={classes.links} aria-label='Primary navigation'>
+                {config.map((item) => {
+                    const Icon = item.icon
                     return (
-                        <Button
-                            key={crypto.randomUUID()}
-                            variant='ghost'
-                            asChild
-                        >
-                            <Link to={el.path}>{el.icon}</Link>
-                        </Button>
+                        <Tooltip key={item.path}>
+                            <TooltipTrigger asChild>
+                                <NavLink
+                                    to={item.path}
+                                    aria-label={item.label}
+                                    className={({ isActive }) =>
+                                        clsx(
+                                            classes.linkButton,
+                                            item.isPrimary &&
+                                                classes.primaryLink,
+                                            isActive && classes.activeLink
+                                        )
+                                    }
+                                >
+                                    <Icon aria-hidden='true' />
+                                </NavLink>
+                            </TooltipTrigger>
+                            <TooltipContent>{item.label}</TooltipContent>
+                        </Tooltip>
                     )
                 })}
             </nav>

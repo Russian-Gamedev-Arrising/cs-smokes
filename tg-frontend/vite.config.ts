@@ -27,6 +27,9 @@ export default defineConfig(() => {
             allowedHosts: ["cs-lineups"],
         },
         plugins: [react(), tailwindcss()],
+        optimizeDeps: {
+            include: ["@radix-ui/react-tooltip"],
+        },
         resolve: {
             alias: {
                 "@scss": path.resolve("src/shared/scss"),

@@ -5,6 +5,7 @@ import { grenadePageParamsSchema } from "../domain"
 import classes from "./grenade-page.module.scss"
 import { GoBack } from "@features/go-back"
 import { grenadeApi, GrenadeOverview } from "@entities/grenade"
+import { mapApi } from "@entities/map"
 import { Button } from "@shared/ui/button"
 import { ToggleFavorites } from "@features/favorites/toggle"
 // import { useParams } from "react-router-dom"
@@ -29,6 +30,10 @@ export function GrenadePage() {
         isLoading,
         isError,
     } = useQuery(grenadeApi.getGrenadesByIdOptions({ grenadeId }))
+    const { data: map } = useQuery({
+        ...mapApi.getMapByIdOptions(grenade?.mapId ?? 1),
+        enabled: Boolean(grenade?.mapId),
+    })
 
     return (
         <>
@@ -37,6 +42,9 @@ export function GrenadePage() {
                 grenade={grenade}
                 isError={isError}
                 isLoading={isLoading}
+                mapLabel={
+                    map?.name ?? (grenade ? `Map #${grenade.mapId}` : undefined)
+                }
                 actions={
                     <>
                         <div className={classes.actionsWrapper}>

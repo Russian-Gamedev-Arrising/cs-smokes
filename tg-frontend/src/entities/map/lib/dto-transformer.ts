@@ -25,7 +25,7 @@ export const fromMapPageDTO = (
 ): MapPageModel => {
     return {
         ...fromMapDTO(dto),
-        mapLineups: fromGrenadeArrayDTO(dto.map_lineups),
+        mapLineups: fromGrenadeArrayDTO(dto.map_lineups ?? []),
     }
 }
 

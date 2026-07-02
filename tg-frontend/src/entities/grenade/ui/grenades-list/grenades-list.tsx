@@ -8,12 +8,14 @@ type GrenadesListProps = {
     mapFunction: GrenadesListMaper
     isError?: boolean
     isLoading?: boolean
+    emptyMessage?: string
 }
 
 // Component that ONLY displays provided data, all api requests moved to the features
 export function GrenadesListComponent({
     grenades,
     isError,
+    emptyMessage = "No lineups found",
     mapFunction,
     ...rest
 }: GrenadesListProps) {
@@ -21,6 +23,14 @@ export function GrenadesListComponent({
         return (
             <PlaceholderBlock>
                 Something went wrong in grenades list...
+            </PlaceholderBlock>
+        )
+    }
+
+    if (!rest.isLoading && (!grenades || grenades.length === 0)) {
+        return (
+            <PlaceholderBlock>
+                <span>{emptyMessage}</span>
             </PlaceholderBlock>
         )
     }

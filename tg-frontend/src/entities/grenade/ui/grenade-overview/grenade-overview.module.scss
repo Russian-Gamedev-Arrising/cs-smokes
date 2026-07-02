@@ -1,5 +1,138 @@
+.overview {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(14);
+    width: 100%;
+}
+
 .image {
     width: 100%;
-    height: auto;
-    border-radius: 16px;
+    max-height: toRem(480);
+    border-radius: var(--border-radius);
+    object-fit: cover;
+}
+
+.headerSurface,
+.titleBlock,
+.detailBlock {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(10);
+}
+
+.titleRow,
+.metaRow,
+.badges,
+.actions {
+    display: flex;
+    gap: toRem(8);
+    align-items: center;
+}
+
+.titleRow {
+    justify-content: space-between;
+
+    h1 {
+        min-width: 0;
+        line-height: 1.15;
+    }
+}
+
+.metaRow,
+.definitionList,
+.detailBlock p {
+    line-height: 1.45;
+    color: var(--color-text-muted);
+}
+
+.metaRow,
+.badges {
+    flex-wrap: wrap;
+}
+
+.requestLink {
+    min-height: toRem(26);
+    padding: toRem(4) toRem(8);
+    border: 1px solid rgb(45 212 191 / 35%);
+    border-radius: var(--border-radius-small);
+
+    font-size: var(--text-small);
+    font-weight: 700;
+    color: var(--color-accent);
+
+    &:hover,
+    &:focus-visible {
+        color: #082f2d;
+        background-color: var(--color-accent);
+        outline: none;
+    }
+}
+
+.actions {
+    justify-content: flex-end;
+}
+
+.detailGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: toRem(16);
+}
+
+.creator {
+    display: inline-flex;
+    gap: toRem(8);
+    align-items: center;
+
+    width: fit-content;
+
+    color: var(--color-text-main);
+
+    &:hover,
+    &:focus-visible {
+        color: var(--color-accent);
+        outline: none;
+    }
+}
+
+.avatar {
+    width: toRem(36);
+    height: toRem(36);
+    border-radius: 50%;
+}
+
+.definitionList {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(8);
+
+    div {
+        display: grid;
+        grid-template-columns: toRem(72) minmax(0, 1fr);
+        gap: toRem(10);
+    }
+
+    dt {
+        color: var(--color-text-main);
+    }
+}
+
+.properties {
+    display: flex;
+    flex-wrap: wrap;
+    gap: toRem(6);
+}
+
+@include mobile {
+    .titleRow,
+    .actions {
+        align-items: flex-start;
+    }
+
+    .titleRow {
+        flex-direction: column;
+    }
+
+    .detailGrid {
+        grid-template-columns: 1fr;
+    }
 }

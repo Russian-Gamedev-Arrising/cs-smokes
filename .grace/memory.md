@@ -1,6 +1,6 @@
 # Grace Memory: cs-smokes
 
-Last updated: 2026-06-29
+Last updated: 2026-07-02
 
 ## Project Purpose
 
@@ -89,6 +89,7 @@ Last updated: 2026-06-29
 - Root router loader clears `localStorage`, initializes auth slice and Axios interceptors, then dispatches `loginThunk` when there is no access token.
 - Axios instance base URL is `VITE_BACKEND_URL`.
 - Login uses `VITE_IN_TG_ENVIRONMENT`: if `true`, it reads `Telegram.WebApp.initData`; otherwise it uses `VITE_TG_INIT_DATA` or `"no-init-data"`.
+- `index.html` boots through `src/app/bootstrap.ts`; Telegram WebApp SDK is loaded before the app only when `VITE_IN_TG_ENVIRONMENT=true`, so normal web/Docker QA is not blocked by the external Telegram script.
 - Axios request interceptor adds `Authorization: Bearer <accessToken>` to non-login requests.
 - DTOs are validated with zod before being transformed into frontend models.
 - React Query cache keys are defined on entity API modules, for example `["grenade"]`, `["map"]`, `["grenade-class"]`, `["pull_request"]`, `["favorites"]`.
@@ -100,6 +101,7 @@ Last updated: 2026-06-29
 - `PullRequest` frontend status union includes backend statuses plus `WAITING FOR CREATION` because lineups expose that default request state.
 - Creating a lineup posts converted form data to `/lineups/`, then invalidates grenade and map detail queries.
 - Pull request creation posts `{ lineup_id: grenadeId }` to `/pull_requests`, then invalidates pull request and grenade query caches.
+- Tactical map/home views tolerate backend map detail responses with `map_lineups: null` by falling back to the authenticated `/lineups` list filtered by `map_id`.
 
 ## Commands And Quality Gates
 
@@ -115,6 +117,9 @@ Last updated: 2026-06-29
   - `npm run lint:format`
   - `npm run test`
   - `npm run type-check`
+  - `npm run qa:tactical:sign`
+  - `npm run qa:tactical:paths`
+  - `npm run qa:tactical:layout`
   - `npm run storybook`
   - `npm run build-storybook`
 - Frontend dev entrypoint `tg-frontend/run-server.sh` runs `npm install`, then `npm run host`.

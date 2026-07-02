@@ -1,0 +1,78 @@
+.toolbar {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(10);
+    width: 100%;
+}
+
+.mobileRow {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) toRem(44) toRem(44);
+    gap: toRem(8);
+    align-items: center;
+
+    width: 100%;
+}
+
+.search {
+    min-width: 0;
+    height: toRem(44);
+    border-radius: var(--border-radius);
+
+    color: var(--color-text-main);
+
+    background-color: var(--color-background-alt);
+}
+
+.addButton {
+    width: 100%;
+    min-height: toRem(44);
+}
+
+.controlsPanel {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(toRem(132), 1fr));
+    gap: toRem(10);
+
+    width: 100%;
+    padding: toRem(10);
+    border: var(--border-classic);
+    border-radius: var(--border-radius);
+
+    background-color: rgb(15 23 42 / 55%);
+}
+
+.propertyChips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: toRem(6);
+}
+
+.chip,
+.activeChip {
+    min-height: toRem(28);
+    padding: toRem(4) toRem(8);
+    border: var(--border-classic);
+    border-radius: var(--border-radius-small);
+
+    font-size: var(--text-small);
+    font-weight: 700;
+    color: var(--color-text-muted);
+
+    background-color: rgb(31 41 55 / 70%);
+}
+
+.activeChip {
+    color: #082f2d;
+    background-color: var(--color-accent);
+}
+
+.summary {
+    display: flex;
+    gap: toRem(10);
+    align-items: center;
+    justify-content: space-between;
+
+    font-size: var(--text-small);
+    color: var(--color-text-muted);
+}

@@ -20,7 +20,10 @@
         "test:e2e": "npm run test && npm run type-check",
         "type-check": "tsc --noEmit --pretty --skipLibCheck -p tsconfig.json",
         "test-storybook": "VITE_BACKEND_URL=http://localhost:3000/api VITE_TG_INIT_DATA=123 VITE_IN_TG_ENVIRONMENT=false npx test-storybook",
-        "build-storybook": "VITE_BACKEND_URL=http://localhost:3000/api VITE_TG_INIT_DATA=123 VITE_IN_TG_ENVIRONMENT=false storybook build"
+        "build-storybook": "VITE_BACKEND_URL=http://localhost:3000/api VITE_TG_INIT_DATA=123 VITE_IN_TG_ENVIRONMENT=false storybook build",
+        "qa:tactical:sign": "node scripts/sign-telegram-init-data.mjs",
+        "qa:tactical:paths": "node scripts/find-tactical-qa-paths.mjs",
+        "qa:tactical:layout": "node scripts/verify-tactical-layout.mjs"
     },
     "dependencies": {
         "@radix-ui/react-dialog": "^1.1.14",

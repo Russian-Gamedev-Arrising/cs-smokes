@@ -1,16 +1,20 @@
 import { ReactNode } from "react"
 import { Frown } from "lucide-react"
+import { Link } from "react-router-dom"
 import { GrenadeModel } from "../../model/domain"
+import { getRequestHref, getRequestStatusMeta } from "../../lib/request-status"
 import classes from "./grenade-overview.module.scss"
 import { PlaceholderBlock } from "@shared/ui/placeholder-block"
 import { Badge } from "@shared/ui/badge"
 import { ImageComponent } from "@shared/ui/image"
+import { TacticalSurface } from "@shared/ui/tactical-page"
 
 type GrenadeOverviewProps = {
     grenade?: GrenadeModel
     isLoading?: boolean
     isError?: boolean
     actions?: ReactNode
+    mapLabel?: string
 }
 
 export function GrenadeOverview({
@@ -18,6 +22,7 @@ export function GrenadeOverview({
     isError,
     isLoading,
     actions,
+    mapLabel,
 }: GrenadeOverviewProps) {
     if (isError) {
         return (
@@ -43,61 +48,11 @@ export function GrenadeOverview({
         )
     }
 
-    return (
-        <>
-            <div className='flex flex-col items-start gap-2.5 w-full'>
-                <div className='flex flex-row justify-between items w-full'>
-                    {grenade.isApproved ? (
-                        <>
-                            <h1>{grenade.title}</h1>
-                            <Badge color='success'>Approved</Badge>
-                        </>
-                    ) : (
-                        <>
-                            <h1>{grenade.title}</h1>
-                            <Badge color='danger'>Not approved yet</Badge>
-                        </>
-                    )}
-                </div>
-                <div className='flex flex-row w-full justify-between'>
-                    <h2 className='text-muted-foreground'>
-                        lineup id: {grenade.grenadeId}
-                    </h2>
-                    <h2 className='text-muted-foreground'>
-                        {grenade.grenadeClass.name}
-                    </h2>
-                </div>
-            </div>
+    const requestMeta = getRequestStatusMeta(grenade.request.status)
+    const requestHref = getRequestHref(grenade.request)
 
-            <div className='grid grid-cols-2 w-full'>
-                <div className='flex flex-col gap-1 w-full'>
-                    <h3>Author:</h3>
-                    <div className='flex flex-row gap-1 w-full items-center'>
-                        <ImageComponent
-                            className='rounded-full'
-                            url={grenade.creator.avatarUrl}
-                            alt={`${grenade.creator.username} avatar`}
-                            width={36}
-                            height={36}
-                        />
-                        <p>{grenade.creator.username}</p>
-                    </div>
-                </div>
-                <div className='flex flex-col gap-1 w-full'>
-                    <h3>Map:</h3>
-                    <div className='flex flex-row gap-1 w-full items-center'>
-                        <ImageComponent
-                            className='rounded-full'
-                            skeletonClasses='rounded-full'
-                            url={grenade.creator.avatarUrl}
-                            alt={`${grenade.creator.username} avatar`}
-                            width={36}
-                            height={36}
-                        />
-                        <p>{grenade.mapId}</p>
-                    </div>
-                </div>
-            </div>
+    return (
+        <div className={classes.overview}>
             <ImageComponent
                 className={classes.image}
                 url={grenade.previewImageLink}
@@ -110,30 +65,86 @@ export function GrenadeOverview({
                     </>
                 }
             />
-            <div className='flex flex-col gap-1 w-full'>
-                <h3>Description:</h3>
-                <p className='text-left'>{grenade.description}</p>
-            </div>
-            <div className='flex flex-col gap-1 w-ful w-full'>
-                <h3>Grenade information:</h3>
-                <div>
-                    <div className='flex flex-row justify-between items-center w-full'>
-                        <h6 className='text-muted-foreground'>
-                            Type of grenade
-                        </h6>
-                        <p>{grenade.grenadeClass.name}</p>
+            <TacticalSurface className={classes.headerSurface}>
+                <div className={classes.titleBlock}>
+                    <div className={classes.titleRow}>
+                        <h1>{grenade.title}</h1>
+                        <Badge
+                            color={grenade.isApproved ? "success" : "danger"}
+                        >
+                            {grenade.isApproved ? "Approved" : "Not approved"}
+                        </Badge>
                     </div>
-                    <div className='flex flex-row justify-between items-center w-full'>
-                        <h6 className='text-muted-foreground'>
-                            Grenade description
-                        </h6>
-                        <p className='text-right'>
-                            {grenade.grenadeClass.description}
-                        </p>
+                    <div className={classes.metaRow}>
+                        <span>{mapLabel ?? `Map #${grenade.mapId}`}</span>
+                        <span>{grenade.grenadeClass.name}</span>
+                        <span>{grenade.views} views</span>
                     </div>
                 </div>
-            </div>
-            {actions}
-        </>
+                <div className={classes.badges}>
+                    <Badge color={requestMeta.tone}>{requestMeta.label}</Badge>
+                    {requestHref && (
+                        <Link className={classes.requestLink} to={requestHref}>
+                            View request
+                        </Link>
+                    )}
+                </div>
+                {actions && <div className={classes.actions}>{actions}</div>}
+            </TacticalSurface>
+            <TacticalSurface className={classes.detailGrid}>
+                <section className={classes.detailBlock}>
+                    <h2>Description</h2>
+                    <p>{grenade.description || "No description provided."}</p>
+                </section>
+                <section className={classes.detailBlock}>
+                    <h2>Creator</h2>
+                    <Link
+                        className={classes.creator}
+                        to={`/guest/profile/${grenade.creator.userId}`}
+                    >
+                        <ImageComponent
+                            className={classes.avatar}
+                            skeletonClasses={classes.avatar}
+                            url={grenade.creator.avatarUrl}
+                            alt={`${grenade.creator.username} avatar`}
+                            width={36}
+                            height={36}
+                        />
+                        <span>{grenade.creator.username}</span>
+                    </Link>
+                </section>
+                <section className={classes.detailBlock}>
+                    <h2>Grenade</h2>
+                    <dl className={classes.definitionList}>
+                        <div>
+                            <dt>Type</dt>
+                            <dd>{grenade.grenadeClass.name}</dd>
+                        </div>
+                        <div>
+                            <dt>Info</dt>
+                            <dd>{grenade.grenadeClass.description}</dd>
+                        </div>
+                    </dl>
+                </section>
+                <section className={classes.detailBlock}>
+                    <h2>Properties</h2>
+                    {grenade.propertyList.length > 0 ? (
+                        <div className={classes.properties}>
+                            {grenade.propertyList.map((property) => (
+                                <Badge
+                                    key={property.propertyId}
+                                    color='neutral'
+                                    radius='sm'
+                                >
+                                    {property.name}: {property.value}
+                                </Badge>
+                            ))}
+                        </div>
+                    ) : (
+                        <p>No properties.</p>
+                    )}
+                </section>
+            </TacticalSurface>
+        </div>
     )
 }

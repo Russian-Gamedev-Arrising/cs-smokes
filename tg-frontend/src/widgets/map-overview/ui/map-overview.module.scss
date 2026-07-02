@@ -1,18 +1,38 @@
-.heading {
+.mapHero {
     display: flex;
-    flex-direction: row;
+    gap: toRem(14);
     align-items: center;
     justify-content: space-between;
-
-    width: 100%;
-
-    .link {
-        border: none;
-        font-size: 12px;
-        color: var(--color-accent);
-    }
 }
 
 .mapImage {
-    align-self: flex-start;
+    aspect-ratio: 16 / 9;
+    width: min(38%, toRem(220));
+    border-radius: var(--border-radius);
+    object-fit: cover;
+}
+
+.mapHeroText {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(6);
+    min-width: 0;
+
+    h2 {
+        line-height: 1.15;
+    }
+
+    p {
+        color: var(--color-text-muted);
+    }
+}
+
+@include mobile {
+    .mapHero {
+        align-items: stretch;
+    }
+
+    .mapImage {
+        display: none;
+    }
 }

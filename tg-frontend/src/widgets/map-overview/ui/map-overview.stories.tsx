@@ -1,8 +1,10 @@
 import { Meta, StoryObj } from "@storybook/react"
-import { expect } from "@storybook/test"
+import { expect, userEvent, waitFor } from "@storybook/test"
 import { MapOverview } from "./map-overview"
 import { mockMapPage, testMapPageServer } from "@entities/map/dev"
 import { testGrenadeServer } from "@entities/grenade/dev"
+
+const mockMapLineups = mockMapPage.map_lineups ?? []
 
 const meta: Meta<typeof MapOverview> = {
     component: MapOverview,
@@ -17,13 +19,13 @@ const meta: Meta<typeof MapOverview> = {
                 }),
                 // Grenades
                 testGrenadeServer({
-                    grenadeId: mockMapPage.map_lineups[0].grenade_id,
-                    customData: mockMapPage.map_lineups[0],
+                    grenadeId: mockMapLineups[0].grenade_id,
+                    customData: mockMapLineups[0],
                     delayInMs: 200,
                 }),
                 testGrenadeServer({
-                    grenadeId: mockMapPage.map_lineups[1].grenade_id,
-                    customData: mockMapPage.map_lineups[1],
+                    grenadeId: mockMapLineups[1].grenade_id,
+                    customData: mockMapLineups[1],
                     delayInMs: 250,
                 }),
             ],
@@ -53,6 +55,32 @@ const meta: Meta<typeof MapOverview> = {
 
         await expect(title).toHaveTextContent(mockMapPage.name)
         await expect(title).toBeVisible()
+
+        await expect(await canvas.findByText("Mid Control Smoke")).toBeVisible()
+        await expect(
+            await canvas.findByText("One-Way Smoke on Mirage")
+        ).toBeVisible()
+
+        const sortSelect = canvas.getByLabelText("Sort")
+        await userEvent.selectOptions(sortSelect, "titleDesc")
+        await waitFor(() => {
+            const cards = canvas.getAllByLabelText("card")
+
+            expect(cards[0]).toHaveTextContent("One-Way Smoke on Mirage")
+            expect(cards[1]).toHaveTextContent("Mid Control Smoke")
+        })
+
+        const searchInput = canvas.getByLabelText("Search lineups")
+        await userEvent.type(searchInput, "does-not-exist")
+        await expect(
+            await canvas.findByText("No lineups match these controls")
+        ).toBeVisible()
+
+        await userEvent.click(canvas.getByRole("button", { name: "Reset" }))
+        await waitFor(() => {
+            expect(canvas.getByText("Mid Control Smoke")).toBeVisible()
+            expect(canvas.getByText("One-Way Smoke on Mirage")).toBeVisible()
+        })
     },
 }
 

@@ -1,34 +1,89 @@
-.landingSection {
+.featuredMap {
+    display: flex;
+    gap: toRem(18);
+    align-items: center;
+    justify-content: space-between;
+}
+
+.featuredText,
+.fastSection {
     display: flex;
     flex-direction: column;
-    gap: 32px;
-    align-items: start;
+    gap: toRem(12);
+}
 
-    .main {
-        display: flex;
-        flex-direction: row;
-        gap: 16px;
-        align-items: center;
-        justify-content: space-between;
+.featuredText {
+    min-width: 0;
+
+    h2 {
+        font-size: var(--h1-font-size);
+        line-height: 1.12;
     }
 
-    .header {
-        max-width: 60%;
+    p {
+        line-height: 1.45;
+        color: var(--color-text-muted);
     }
+}
 
-    .title {
-        font-size: 3rem;
-        font-weight: 800;
-    }
+.kicker {
+    font-size: var(--text-small);
+    font-weight: 700;
+    color: var(--color-tactical-accent);
+    text-transform: uppercase;
+}
 
-    .subTitle {
-        font-size: 1.5rem;
-        color: var(--muted-foreground);
+.heroActions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: toRem(8);
+}
+
+.previewImage {
+    aspect-ratio: 16 / 10;
+    width: min(42%, toRem(260));
+    border-radius: var(--border-radius);
+    object-fit: cover;
+}
+
+.mapSelector {
+    display: flex;
+    flex-wrap: wrap;
+    gap: toRem(8);
+}
+
+.mapChip,
+.activeMapChip {
+    min-height: toRem(36);
+    padding: toRem(7) toRem(10);
+    border: var(--border-classic);
+    border-radius: var(--border-radius);
+
+    font-weight: 700;
+    color: var(--color-text-main);
+
+    background-color: rgb(31 41 55 / 70%);
+}
+
+.activeMapChip {
+    color: #082f2d;
+    background-color: var(--color-accent);
+}
+
+@include mobile {
+    .featuredMap {
+        align-items: stretch;
     }
 
     .previewImage {
-        width: 100%;
-        max-width: 350px;
-        border-radius: 16px;
+        display: none;
+    }
+
+    .heroActions {
+        flex-direction: column;
+
+        > * {
+            width: 100%;
+        }
     }
 }

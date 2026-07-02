@@ -7,7 +7,7 @@
 
     min-width: toRem(150);
     height: 100%;
-    border-radius: 10px;
+    border-radius: var(--border-radius);
 
     .content {
         display: contents;
@@ -18,7 +18,7 @@
         min-width: toRem(130);
         height: unset;
         max-height: 100%;
-        border-radius: 6px;
+        border-radius: var(--border-radius);
     }
 
     .topSlot,
@@ -51,9 +51,10 @@
 
     padding: toRem(10);
     border: var(--border-classic);
-    border-radius: var(--border-radius-large);
+    border-radius: var(--border-radius);
 
     background-color: var(--color-background-alt);
+    box-shadow: var(--box-shadow);
 
     &:active {
         border: var(--border-accent);

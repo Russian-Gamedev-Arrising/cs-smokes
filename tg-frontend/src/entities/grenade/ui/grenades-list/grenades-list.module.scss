@@ -1,5 +1,4 @@
 .grenadesList {
-    @include auto-columns(var(--card-width));
-
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, toRem(220)), 1fr));
     gap: var(--grid-gap);
 }

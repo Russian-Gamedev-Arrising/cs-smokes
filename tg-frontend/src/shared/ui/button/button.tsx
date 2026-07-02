@@ -1,7 +1,7 @@
 import { Slot } from "@radix-ui/react-slot"
 import { cva } from "class-variance-authority"
 
-import { ReactNode, useMemo } from "react"
+import { forwardRef, ReactNode, useMemo } from "react"
 import { Loader2 } from "lucide-react"
 import { cn } from "../../lib/utils"
 import classes from "./button.module.scss"
@@ -12,14 +12,14 @@ export const buttonVariants = cva(
         variants: {
             variant: {
                 default:
-                    "bg-[var(--color-background-alt)] text-primary-foreground shadow-xs hover:bg-primary/90",
+                    "border-transparent bg-primary text-primary-foreground shadow-xs hover:bg-primary/90 hover:text-primary-foreground",
                 destructive:
-                    "text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40",
+                    "border-transparent bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40",
                 outline:
-                    "border border-input bg-background shadow-xs hover:bg-accent hover:text-accent-foreground",
+                    "border border-input bg-transparent text-foreground shadow-xs hover:bg-secondary hover:text-secondary-foreground",
                 secondary:
-                    "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
-                ghost: "hover:bg-accent hover:text-accent-foreground",
+                    "border-transparent bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
+                ghost: "border-transparent text-foreground hover:bg-secondary hover:text-primary",
                 link: "text-primary underline-offset-4 hover:underline",
             },
             size: {
@@ -51,85 +51,95 @@ type ButtonProps = React.ComponentProps<"button"> & {
     loaderElement?: ReactNode
 }
 
-export function Button({
-    className,
-    variant,
-    size,
-    asChild = false,
-    isLoading = false,
-    loaderPosition = "before",
-    loaderElement = <Loader2 className='animate-spin' />,
-    ...props
-}: ButtonProps) {
-    const combinedButtonClass: string = useMemo(() => {
-        const draftClass: string = cn(
-            classes.button,
-            buttonVariants({ variant, size, className })
-        )
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+    function Button(
+        {
+            className,
+            variant,
+            size,
+            asChild = false,
+            isLoading = false,
+            loaderPosition = "before",
+            loaderElement = <Loader2 className='animate-spin' />,
+            ...props
+        },
+        ref
+    ) {
+        const combinedButtonClass: string = useMemo(() => {
+            const draftClass: string = cn(
+                classes.button,
+                buttonVariants({ variant, size, className })
+            )
 
-        return draftClass
-    }, [variant, size, className])
+            return draftClass
+        }, [variant, size, className])
 
-    if (isLoading) {
-        if (size === "icon") {
+        if (isLoading) {
+            if (size === "icon") {
+                return (
+                    <button
+                        ref={ref}
+                        type='button'
+                        data-slot='button'
+                        className={combinedButtonClass}
+                        {...props}
+                        disabled={true}
+                    >
+                        {loaderElement}
+                    </button>
+                )
+            } else {
+                if (loaderPosition === "before") {
+                    return (
+                        <button
+                            ref={ref}
+                            type='button'
+                            data-slot='button'
+                            className={combinedButtonClass}
+                            {...props}
+                            disabled={true}
+                        >
+                            {loaderElement}
+                            {props.value}
+                        </button>
+                    )
+                } else if (loaderPosition === "after") {
+                    return (
+                        <button
+                            ref={ref}
+                            type='button'
+                            data-slot='button'
+                            className={combinedButtonClass}
+                            {...props}
+                            disabled={true}
+                        >
+                            {props.value}
+                            {loaderElement}
+                        </button>
+                    )
+                }
+            }
+        }
+
+        if (asChild) {
             return (
-                <button
-                    type='button'
+                <Slot
+                    ref={ref}
                     data-slot='button'
                     className={combinedButtonClass}
                     {...props}
-                    disabled={true}
-                >
-                    {loaderElement}
-                </button>
+                />
             )
-        } else {
-            if (loaderPosition === "before") {
-                return (
-                    <button
-                        type='button'
-                        data-slot='button'
-                        className={combinedButtonClass}
-                        {...props}
-                        disabled={true}
-                    >
-                        {loaderElement}
-                        {props.value}
-                    </button>
-                )
-            } else if (loaderPosition === "after") {
-                return (
-                    <button
-                        type='button'
-                        data-slot='button'
-                        className={combinedButtonClass}
-                        {...props}
-                        disabled={true}
-                    >
-                        {props.value}
-                        {loaderElement}
-                    </button>
-                )
-            }
         }
-    }
 
-    if (asChild) {
         return (
-            <Slot
+            <button
+                ref={ref}
+                type='button'
                 data-slot='button'
                 className={combinedButtonClass}
                 {...props}
             />
         )
     }
-
-    return (
-        <button
-            type='button'
-            data-slot='button'
-            className={combinedButtonClass}
-            {...props}
-        />
-    )
-}
+)
